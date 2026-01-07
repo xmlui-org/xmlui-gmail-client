@@ -1,0 +1,25 @@
+<Component name="ErrorPanel">
+    <Card
+        when="{ $props.error != null }"
+        backgroundColor="attention"
+        margin="auto"
+        borderRadius="15px"
+        width="200px"
+        height="150px"
+    >
+        <CVStack gap="space-2">
+            <Text variant="strong">
+                ❌ Error
+            </Text>
+            <Text>
+                { $props.error.message || JSON.stringify($props.error) }
+            </Text>
+            <Text when="{ $props.error }" variant="code" fontSize="smaller">
+                { JSON.stringify($props.error) }
+            </Text>
+            <Button onClick="{ $props.auth.logout(); window.location.reload() }" size="small">
+                Re-authenticate
+            </Button>
+        </CVStack>
+    </Card>
+</Component>

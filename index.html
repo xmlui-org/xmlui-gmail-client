@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://docs.xmlui.org/resources/files/for-download/xmlui/xmlui-standalone.umd.js"></script>
+    <script src="xmlui/xmlui-hello-auth.js"></script>
+    <script>
+      window.config = {};
+      fetch("config.json")
+        .then((r) => (r.ok ? r.json() : {}))
+        .then((c) => Object.assign(window.config, c));
+    </script>
+    <script>
+      // Decode HTML entities (e.g. convert '&lt;' -> '<')
+      window.decodeHtml = function (s) {
+        if (s == null) return "";
+        const doc = new DOMParser().parseFromString(String(s), "text/html");
+        return doc.documentElement.textContent || "";
+      };
+      // Helper functions для Gmail
+      window.getHeader = function (message, headerName) {
+        if (!message || !message.payload || !message.payload.headers) {
+          return "";
+        }
+
+        const header = message.payload.headers.find(function (h) {
+          return h.name.toLowerCase() === headerName.toLowerCase();
+        });
+
+        return header ? window.decodeHtml(header.value) : "";
+      };
+
+      // Escape HTML special characters to render raw text safely
+      window.escapeHtml = function (s) {
+        return String(s || "")
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#39;");
+      };
+    </script>
+  </head>
+
+  <body></body>
+</html>

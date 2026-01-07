@@ -1,0 +1,29 @@
+<Component name="LoginCard">
+  <Card
+    when="{ !$props.auth.user }"
+    width="350px"
+    margin="auto"
+    height="300px"
+    borderRadius="15px"
+    paddingTop="40px"
+  >
+    <CVStack>
+      <Avatar
+        size="64px"
+        backgroundColor="$const-color-surface-100"
+        url="/resources/mail-icon.svg"
+        borderRadius="100%"
+        padding="15px"
+      />
+      <H1>
+        Log in
+      </H1>
+      <Text>
+        You are not authenticated
+      </Text>
+      <Button onClick="{ $props.auth.login() }" width="250px">
+        Sign in with Google
+      </Button>
+    </CVStack>
+  </Card>
+</Component>

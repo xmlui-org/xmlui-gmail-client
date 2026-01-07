@@ -1,0 +1,107 @@
+<App
+  xmlns:Extensions="component-ns:XMLUIExtensions"
+  layout="vertical-full-header"
+>
+  <Extensions:HelloAuth
+    id="auth"
+    issuer="https://accounts.google.com"
+    client_id="{window.config.__GMAIL_CLIENT_ID__}"
+    client_secret="{window.config.__GMAIL_CLIENT_SECRET__}"
+    redirect_uri="http://localhost:5500"
+    scopes="openid email https://www.googleapis.com/auth/gmail.readonly"
+    storage="session"
+    debug="true"
+  />
+
+  <!-- DataSource for list of messages -->
+  <DataSource
+    id="messagesList"
+    when="{ auth.user }"
+    url="https://gmail.googleapis.com/gmail/v1/users/me/messages"
+    headers="{ { Authorization: 'Bearer ' + auth.tokens.access_token } }"
+    resultSelector="messages"
+  />
+
+  <AppHeader>
+    <HStack
+      verticalAlignment="center"
+      when="{ !auth.user || mediaSize.sizeIndex >= 2 }"
+    >
+      <Avatar
+        backgroundColor="transparent"
+        size="24px"
+        url="/resources/mail-icon.svg"
+      />
+      <H1>
+        XMLUI Gmail Client
+      </H1>
+    </HStack>
+
+    <template name="profileMenuTemplate">
+      <HStack verticalAlignment="center" when="{ auth.user }">
+        <Text when="{ mediaSize.size !== 'xs' }" fontSize="smaller">
+          {auth.user.email}
+        </Text>
+        <Button
+          icon="refresh"
+          variant="outlined"
+          onClick="{ messagesList.refetch() }"
+          enabled="{ !messagesList.inProgress }"
+        >
+          Refresh
+        </Button>
+        <Button
+          onClick="{ auth.logout(); window.location.reload() }"
+          variant="outlined"
+          icon="exit"
+        >
+          Log out
+        </Button>
+      </HStack>
+    </template>
+
+  </AppHeader>
+
+  <!-- Error panel -->
+  <ErrorPanel
+    error="{ messagesList.error }"
+    auth="{ auth }"
+    when="{ messagesList.error!=null }"
+  />
+
+  <!-- Loading state -->
+  <Text when="{ messagesList.inProgress }" margin="auto">
+    ⏳ Loading...
+  </Text>
+  
+  <!-- Not authenticated -->
+  <LoginCard auth="{ auth }" when="{ !auth.user }" />
+
+  <Pages
+    when="{ auth.user && messagesList.error==null && !messagesList.inProgress}"
+  >
+    <Page url="/">
+      <!-- Home page -->
+      <HomePage
+        auth="{ auth }"
+        messagesList="{ messagesList }"
+      />
+    </Page>
+  </Pages>
+
+  <Footer>
+    <Text>
+      Built with XMLUI {(window.config.appVersion) }
+    </Text>
+    <ToneSwitch />
+    <SpaceFiller />
+    <Text
+      when="{ mediaSize.size === 'xs' }"
+      fontSize="smaller"
+      overflowMode="ellipsis"
+      width="150px"
+    >
+      {auth.user.email}
+    </Text>
+  </Footer>
+</App>

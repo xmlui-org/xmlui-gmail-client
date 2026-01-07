@@ -1,0 +1,34 @@
+<Component
+  name="HomePage"
+  var.auth="{ $props.auth } "
+  var.messagesList="{ $props.messagesList }"
+>
+  <!-- Desktop view -->
+  <HSplitter
+    height="100%"
+    minPrimarySize="320px"
+    initialPrimarySize="35%"
+    when="{ mediaSize.sizeIndex > 1 }"
+  >
+    <VStack    
+      height="83vh"
+    >
+      <MessagesList
+        auth="{ auth }"
+        messagesList="{ messagesList }"
+      />
+    </VStack>
+    <MessageContent />
+  </HSplitter>
+
+  <!-- Mobile view -->
+  <VStack  
+    when="{ mediaSize.sizeIndex <= 1 }"
+  >
+    <MessagesList
+      auth="{ auth }"
+      messagesList="{ messagesList }"
+    />
+  </VStack>
+
+</Component>

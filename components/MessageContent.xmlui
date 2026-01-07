@@ -1,0 +1,7 @@
+<Component name="MessageContent">
+    <Card width="97%" marginLeft="10px"  >
+        <Text>
+            Test
+        </Text>
+    </Card>
+</Component>

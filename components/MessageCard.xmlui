@@ -1,0 +1,63 @@
+<Component name="MessageCard">
+  <!-- DataSource для деталей листа -->
+  <DataSource
+    when="{ $props.messageId && $props.accessToken }"
+    url="{ 'https://gmail.googleapis.com/gmail/v1/users/me/messages/' + $props.messageId }"
+    headers="{ { Authorization: 'Bearer ' + $props.accessToken } }"
+    id="msgData"
+  />
+
+  <Card margin="0 10px 0 10px" >
+    <VStack>
+
+      <!-- Loading state -->
+      <Text when="{ msgData.loading }">
+        📨 Loading details...
+      </Text>
+
+      <!-- Message content -->
+      <VStack gap="$space-1" when="{ msgData.value }">     
+
+
+        <VStack gap="$space-1" paddingRight="10px">
+          <Text variant="strong" fontSize="larger" overflowMode="ellipsis">
+              {window.getHeader(msgData.value, 'Subject') }
+            </Text>
+          <Text fontSize="smaller" color="$textColor--disabled">
+              { formatDate(window.getHeader(msgData.value, 'Date'), "MMM dd, yyyy HH:mm") }
+            </Text>
+        </VStack>
+
+        <!-- From -->
+        <Text overflowMode="ellipsis">
+          <strong>
+            From:
+          </strong>
+          { " " + window.getHeader(msgData.value, 'From') }
+        </Text>
+
+        <!-- Snippet -->
+        <Text fontSize="smaller" maxLines="2">
+          { window.decodeHtml(msgData.value.snippet) }
+        </Text>
+ 
+      </VStack
+      >
+
+      <!-- Error state -->
+      <VStack gap="space-1" when="{ msgData.error }">
+        <Text variant="strong" color="attention">
+          ❌ Error loading message
+        </Text>
+        <Text fontSize="smaller">
+          { msgData.error.message || JSON.stringify(msgData.error) }
+        </Text>
+      </VStack>
+
+      <!-- No data state -->
+      <Text when="{ !msgData.loading && !msgData.value && !msgData.error }">
+        ⏳ Waiting for data...
+      </Text>
+    </VStack>
+  </Card>
+</Component>

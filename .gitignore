@@ -1,0 +1,5 @@
+/.creds
+
+# Common ignores
+node_modules/
+.DS_Store
