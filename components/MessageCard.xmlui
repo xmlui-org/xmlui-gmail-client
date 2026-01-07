@@ -1,5 +1,11 @@
-<Component name="MessageCard">
-  <!-- DataSource для деталей листа -->
+<Component
+  name="MessageCard"
+  var.subject="{ window.getHeader(msgData.value, 'Subject')  }"
+  var.from="{ window.getHeader(msgData.value, 'From')  }"
+  var.date="{ window.getHeader(msgData.value, 'Date')  }"
+  var.snippet="{ window.decodeHtml(msgData.value.snippet) }"
+>
+  <!-- DataSource for obtaining details of a specific message -->
   <DataSource
     when="{ $props.messageId && $props.accessToken }"
     url="{ 'https://gmail.googleapis.com/gmail/v1/users/me/messages/' + $props.messageId }"
@@ -7,25 +13,42 @@
     id="msgData"
   />
 
-  <Card margin="0 10px 0 10px" >
-    <VStack>
+  <!-- Using AppState for global state -->
+  <AppState id="selectedMessage" bucket="appState" />
 
+  <Card
+    margin="0 10px 0 10px"
+    cursor="pointer"
+    borderColor="{selectedMessage.value.messageId == $props.messageId ? '$textColor--disabled' : ''}"
+    onClick="{
+      if (msgData.value) {
+        selectedMessage.update({
+          messageId: $props.messageId,
+          subject: subject,
+          from: from,
+          date: date,
+          snippet: snippet,
+          payload: msgData.value.payload,
+          fullMessage: msgData.value
+        })
+      }
+    }"
+  >
+    <VStack gap="$space-1">
       <!-- Loading state -->
       <Text when="{ msgData.loading }">
-        📨 Loading details...
+        📨 Loading...
       </Text>
 
       <!-- Message content -->
-      <VStack gap="$space-1" when="{ msgData.value }">     
-
-
+      <VStack gap="$space-1" when="{ msgData.value }">
         <VStack gap="$space-1" paddingRight="10px">
           <Text variant="strong" fontSize="larger" overflowMode="ellipsis">
-              {window.getHeader(msgData.value, 'Subject') }
-            </Text>
+            { subject || '(No Subject)' }
+          </Text>
           <Text fontSize="smaller" color="$textColor--disabled">
-              { formatDate(window.getHeader(msgData.value, 'Date'), "MMM dd, yyyy HH:mm") }
-            </Text>
+            { formatDate(date, "MMM dd, yyyy HH:mm") }
+          </Text>
         </VStack>
 
         <!-- From -->
@@ -33,19 +56,17 @@
           <strong>
             From:
           </strong>
-          { " " + window.getHeader(msgData.value, 'From') }
+          { " " + from || '(Unknown Sender)' }
         </Text>
 
         <!-- Snippet -->
         <Text fontSize="smaller" maxLines="2">
-          { window.decodeHtml(msgData.value.snippet) }
+          { snippet }
         </Text>
- 
-      </VStack
-      >
+      </VStack>
 
       <!-- Error state -->
-      <VStack gap="space-1" when="{ msgData.error }">
+      <VStack gap="$space-1" when="{ msgData.error!=null }">
         <Text variant="strong" color="attention">
           ❌ Error loading message
         </Text>
@@ -53,11 +74,6 @@
           { msgData.error.message || JSON.stringify(msgData.error) }
         </Text>
       </VStack>
-
-      <!-- No data state -->
-      <Text when="{ !msgData.loading && !msgData.value && !msgData.error }">
-        ⏳ Waiting for data...
-      </Text>
     </VStack>
   </Card>
 </Component>
