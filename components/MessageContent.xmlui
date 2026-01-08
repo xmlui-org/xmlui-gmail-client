@@ -1,35 +1,34 @@
 <Component name="MessageContent" var.iframeHeight="300">
     <AppState id="selectedMessage" bucket="appState" />
 
-    <VStack height="100%">
+     <VStack height="100%" overflowY="auto">
+       <VStack height="12%" minHeight="90px" gap="0">
         <!-- Header -->
-        <VStack gap="0">
-            <Text variant="strong" fontSize="x-large">
-                { selectedMessage.value.subject || '(No Subject)' }
+        <Text variant="strong" fontSize="x-large" overflowMode="ellipsis">
+            { selectedMessage.value.subject || '(No Subject)' }
+        </Text>
+
+        <HStack wrapContent="true" gap="10px" verticalAlignment="center">
+            <Text overflowMode="ellipsis">
+                <strong>
+                    From:
+                </strong>
+                {selectedMessage.value.fromName}
+                        {selectedMessage.value.fromEmail ? ' &lt;' + selectedMessage.value.fromEmail + '&gt;' : '' }
+            </Text>
+            <SpaceFiller />
+            <Text fontSize="smaller" color="$textColor--disabled">
+                { formatDate(selectedMessage.value.date, "MMMM dd, yyyy 'at' HH:mm") }
             </Text>
 
-            <HStack wrapContent="true" gap="10px" verticalAlignment="center">
-                <Text overflowMode="ellipsis">
-                    <strong>
-                        From:
-                    </strong>
-                    {selectedMessage.value.fromName}
-                        {selectedMessage.value.fromEmail ? ' &lt;' + selectedMessage.value.fromEmail + '&gt;' : '' }
-                </Text>
-                <SpaceFiller />
-                <Text fontSize="smaller" color="$textColor--disabled">
-                    { formatDate(selectedMessage.value.date, "MMMM dd, yyyy 'at' HH:mm") }
-                </Text>
-
-            </HStack>
-
-        </VStack>
+        </HStack>
 
         <!-- Divider -->
         <ContentSeparator
             orientation="horizontal"
             thickness="1px"
         />
+        </VStack>
 
         <!-- Message body -->
         <IFrame
@@ -45,15 +44,7 @@
             }}"
         />
 
-        <!-- Action buttons -->
-        <HStack
-            horizontalAlignment="end"
-        >
-            <Button
-                label="Reply"
-                onClick="{ toast('Not implemented yet') }"
-            />
-        </HStack>
+      
     </VStack>
 
 </Component>
