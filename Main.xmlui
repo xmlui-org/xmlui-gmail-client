@@ -1,5 +1,4 @@
 <App
-  xmlns:Extensions="component-ns:XMLUIExtensions"
   layout="desktop"
   codeBehind="Main.xmlui.xs"
   onMessageReceived="{ (msg) => {
@@ -11,7 +10,7 @@
     }k
   }}"
 >
-  <Extensions:HelloAuth
+  <HelloAuth
     id="auth"
     issuer="https://accounts.google.com"
     client_id="{window.config.__GMAIL_CLIENT_ID__}"
