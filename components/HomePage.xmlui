@@ -7,12 +7,12 @@
 
   <!-- Desktop view -->
   <HSplitter
-    height="83vh"
+    height="100%"
     minPrimarySize="320px"
     initialPrimarySize="35%"
     when="{ mediaSize.sizeIndex > 1 }"
   >
-    <VStack>
+    <VStack height="100%">
       <MessagesList
         auth="{ auth }"
         messagesList="{ messagesList }"
