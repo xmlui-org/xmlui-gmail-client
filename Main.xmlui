@@ -2,6 +2,14 @@
   xmlns:Extensions="component-ns:XMLUIExtensions"
   layout="desktop"
   codeBehind="Main.xmlui.xs"
+  onMessageReceived="{ (msg) => {
+    console.log('[App] Message received:', msg);
+    if (msg && msg.type === 'iframe-height') {
+      const newHeight = Number(msg.height) + 20;
+      console.log('[App] Updating height to:', newHeight);
+      iframeHeight.update( { height: newHeight} );
+    }k
+  }}"
 >
   <Extensions:HelloAuth
     id="auth"
@@ -17,14 +25,17 @@
   <AppState
     id="pagination"
     bucket="messagePagination"
-    initialValue="{ { 
-    currentPage: 0, 
+    initialValue="{ {
+    currentPage: 0,
     pageSize: window.config.PAGE_SIZE,
     currentPageToken: '',
     nextPageToken: '',
     prevPageToken: ''
   } }"
   />
+
+  <!-- AppState for iframe height -->
+  <AppState id="iframeHeight" bucket="iframe" initialValue="{ {height: 300} }" />
   <!-- DataSource for list of messages -->
   <DataSource
     id="messagesList"

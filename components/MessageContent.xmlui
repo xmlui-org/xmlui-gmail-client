@@ -1,5 +1,6 @@
-<Component name="MessageContent" var.iframeHeight="300">
+<Component name="MessageContent">
     <AppState id="selectedMessage" bucket="appState" />
+    <AppState id="iframeHeight" bucket="iframe" />
 
     <VStack height="100%">
         <!-- Header -->
@@ -33,16 +34,9 @@
 
         <!-- Message body -->
         <IFrame
-            id="messageIframe"
-            srcdoc="{ window.wrapEmailHtml(window.DOMPurify.sanitize(selectedMessage.value.body || '')) }"
-            sandbox="allow-same-origin allow-popups allow-popups-to-escape-sandbox"
-            height="{ iframeHeight + 'px' }"
-            onLoad="{ () => {
-                const doc = messageIframe.getContentDocument();
-                if (doc && doc.body) {
-                    iframeHeight = doc.body.scrollHeight + 20;
-                }
-            }}"
+            srcdoc="{ window.wrapEmailHtml(window.sanitizeEmail(selectedMessage.value.body || '')) }"
+            sandbox="allow-scripts allow-popups allow-popups-to-escape-sandbox"
+            height="{iframeHeight.value.height}px"
         />
 
         <!-- Action buttons -->
