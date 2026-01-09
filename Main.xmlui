@@ -1,9 +1,14 @@
 <App
-  xmlns:Extensions="component-ns:XMLUIExtensions"
   layout="desktop"
   codeBehind="Main.xmlui.xs"
+  onMessageReceived="{ (msg) => {
+    if (msg && msg.type === 'iframe-height') {
+      const newHeight = Number(msg.height) + 20;
+      iframeHeight.update( { height: newHeight} );
+    }
+  }}"
 >
-  <Extensions:HelloAuth
+  <HelloAuth
     id="auth"
     issuer="https://accounts.google.com"
     client_id="{window.config.__GMAIL_CLIENT_ID__}"
@@ -17,14 +22,17 @@
   <AppState
     id="pagination"
     bucket="messagePagination"
-    initialValue="{ { 
-    currentPage: 0, 
+    initialValue="{ {
+    currentPage: 0,
     pageSize: window.config.PAGE_SIZE,
     currentPageToken: '',
     nextPageToken: '',
     prevPageToken: ''
   } }"
   />
+  <!-- AppState for iframe height -->
+  <AppState id="iframeHeight" bucket="iframe" initialValue="{ {height: 300} }" />
+  
   <!-- DataSource for list of messages -->
   <DataSource
     id="messagesList"

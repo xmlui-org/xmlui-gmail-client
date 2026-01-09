@@ -16,20 +16,44 @@
       window.parseGmailMessage = parseGmailMessage;
       window.he = he;
       window.emailAddresses = { parseOneAddress, parseFrom };
-      window.DOMPurify = DOMPurify;
 
-      window.wrapEmailHtml = function (htmlContent) {
+      // Configure DOMPurify with strict options
+      window.DOMPurify = DOMPurify;
+      window.sanitizeEmail = function(html) {
+        return DOMPurify.sanitize(html, {
+          ALLOWED_TAGS: ['p', 'br', 'strong', 'em', 'u', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'a', 'ul', 'ol', 'li', 'div', 'span', 'img', 'table', 'thead', 'tbody', 'tr', 'th', 'td'],
+          ALLOWED_ATTR: ['href', 'src', 'alt', 'title', 'class', 'style'],
+          ALLOW_DATA_ATTR: false,
+          FORBID_TAGS: ['script', 'style', 'iframe', 'object', 'embed', 'form', 'input', 'button'],
+          FORBID_ATTR: ['onerror', 'onload', 'onclick', 'onmouseover']
+        });
+      };
+
+      window.getIframeHeight = function() {
+        return window.innerHeight - 200;
+      };
+
+      window.wrapEmailHtml = function (htmlContent, isMobile) {
+        const mobileStyles = isMobile ? ' transform: scale(0.6); transform-origin: top left; width: 150%;' : '';
         return `<!DOCTYPE html>
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<base target="_blank">
 <style>
-body { margin: 0; padding: 16px; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 14px; line-height: 1.5; word-wrap: break-word; overflow-wrap: break-word; }
+body { margin: 0; padding: 16px; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 14px; line-height: 1.5; word-wrap: break-word; overflow-wrap: break-word; overflow: hidden;${mobileStyles} }
 img { max-width: 100% !important; height: auto !important; }
 table { max-width: 100% !important; width: auto !important; }
 td, th { word-wrap: break-word; overflow-wrap: break-word; }
 .gmail_quote { margin: 0; padding: 0; }
 </style>
+<script>
+window.addEventListener('load', function() {    
+  const height = document.body.scrollHeight;
+  if (height == 0) return;  
+  window.parent.postMessage({ type: 'iframe-height', height: height }, '*');
+});
+<\/script>
 </head>
 <${""}body>
 ${htmlContent}
