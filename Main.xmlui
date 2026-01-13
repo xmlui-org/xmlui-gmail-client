@@ -1,8 +1,8 @@
 <App
   id="app"
   layout="desktop"
+  scrollWholePage="false"
   codeBehind="Main.xmlui.xs"
-  var.scrollTrigger="{ selectedMessage.value.messageId && app.scrollToTop() }"
   onMessageReceived="{ (msg) => {
     if (msg && msg.type === 'iframe-height') {
       const newHeight = Number(msg.height) + 20;
@@ -106,12 +106,14 @@
   <Pages
     when="{ auth.user && messagesList.error==null && !messagesList.inProgress}"
   >
-    <Page url="/">
+    <Page url="/" height="100%" minHeight="0">
       <!-- Home page -->
-      <HomePage
-        auth="{ auth }"
-        messagesList="{ messagesList }"
-      />
+      <VStack height="100%" minHeight="0">
+        <HomePage
+          auth="{ auth }"
+          messagesList="{ messagesList }"
+        />
+      </VStack>
     </Page>
   </Pages>
 

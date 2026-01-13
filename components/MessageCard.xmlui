@@ -22,11 +22,12 @@
   <!-- Using AppState for global state -->
   <AppState id="selectedMessage" bucket="appState" />
 
-  <Card
-    margin="0 10px 0 10px"
-    cursor="pointer"
-    borderColor="{selectedMessage.value.messageId == $props.messageId ? '$textColor--disabled' : ''}"
-    onClick="{
+  <Bookmark id="{ 'msg-' + $props.messageId }">
+    <Card
+      margin="0 10px 0 10px"
+      cursor="pointer"
+      borderColor="{selectedMessage.value.messageId == $props.messageId ? '$textColor--disabled' : ''}"
+      onClick="{
       if (msgData.value) {
         selectedMessage.update({
           messageId: $props.messageId,
@@ -85,4 +86,5 @@
       </VStack>
     </VStack>
   </Card>
+  </Bookmark>
 </Component>

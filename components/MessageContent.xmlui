@@ -2,7 +2,7 @@
     <AppState id="selectedMessage" bucket="appState" />
     <AppState id="iframeHeight" bucket="iframe" />
 
-    <VStack height="100%" overflowY="auto" >
+    <VStack>
         <!-- Header -->
         <Text variant="strong" fontSize="x-large" maxLines="2">
             { selectedMessage.value.subject || '(No Subject)' }

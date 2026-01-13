@@ -4,59 +4,69 @@
   var.messagesList="{ $props.messagesList }"
 >
   <AppState id="selectedMessage" bucket="appState" />
+  <ChangeListener
+    listenTo="{ selectedMessage.value.messageId }"
+    onDidChange="{ messageDetailScroll?.scrollToTop('smooth') }"
+  />
 
-  <!-- Desktop view -->
-  <HSplitter
-    height="100%"
-    minPrimarySize="320px"
-    initialPrimarySize="35%"
-    when="{ mediaSize.sizeIndex > 1 }"
-  >
-    <VStack height="100%">
+  <VStack height="100%" minHeight="0">
+    <!-- Desktop view -->
+    <Stack
+      orientation="horizontal"
+      height="100%"
+      minHeight="0"
+      when="{ mediaSize.sizeIndex > 1 }"
+    >
+      <Stack
+        width="280px"
+        minWidth="280px"
+        maxWidth="320px"
+        height="100%"
+        minHeight="0"
+        overflowY="scroll"
+      >
+        <MessagesList
+          auth="{ auth }"
+          messagesList="{ messagesList }"
+        />
+      </Stack>
+
+      <Stack
+        id="messageDetailScroll"
+        height="100%"
+        minHeight="0"
+        overflowY="scroll"
+      >
+        <MessageContent when="{ selectedMessage.value.messageId }" />
+        <!-- Placeholder when no message is selected -->
+        <VStack height="100%" when="{ !selectedMessage.value.messageId }">
+          <Text
+            color="$textColor--disabled"
+            margin="auto"
+          >
+            Select a message to view details
+          </Text>
+        </VStack>
+      </Stack>
+    </Stack>
+
+    <!-- Mobile view -->
+    <VStack
+      when="{ mediaSize.sizeIndex <= 1 }"
+    >
       <MessagesList
         auth="{ auth }"
         messagesList="{ messagesList }"
       />
-    </VStack>
-
-    <!-- Card with message details -->
-    <Card
-      width="97%"
-      marginLeft="10px"
-      height="100%"
-      padding="$space-6"
-      when="{ selectedMessage.value.messageId }"
-    >
-      <MessageContent />
-    </Card>
-
-    <!-- Placeholder when no message is selected -->
-    <VStack height="97%" when="{ !selectedMessage.value.messageId }">
-      <Text
-        color="$textColor--disabled"
-        margin="auto"
+      <ModalDialog when="{ selectedMessage.value.messageId }"          
+        height="90vh"
+        padding="15px"
+        width="90vw"
+        onClose="{ () => selectedMessage.update({messageId: null}) }"
       >
-        Select a message to view details
-      </Text>
+        <MessageContent />
+      </ModalDialog>
     </VStack>
-  </HSplitter>
-
-  <!-- Mobile view -->
-  <VStack
-    when="{ mediaSize.sizeIndex <= 1 }"
-  >
-    <MessagesList
-      auth="{ auth }"
-      messagesList="{ messagesList }"
-    />
-    <ModalDialog when="{ selectedMessage.value.messageId }"          
-      height="90vh"
-      padding="15px"
-      width="90vw"
-      onClose="{ () => selectedMessage.update({messageId: null}) }"
-    >
-      <MessageContent />
-    </ModalDialog>
   </VStack>
 
 </Component>
