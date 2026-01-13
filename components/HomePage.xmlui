@@ -11,16 +11,14 @@
 
   <VStack height="100%" minHeight="0">
     <!-- Desktop view -->
-    <Stack
-      orientation="horizontal"
+    <HSplitter
       height="100%"
       minHeight="0"
+      minPrimarySize="320px"
+      initialPrimarySize="35%"
       when="{ mediaSize.sizeIndex > 1 }"
     >
       <Stack
-        width="280px"
-        minWidth="280px"
-        maxWidth="320px"
         height="100%"
         minHeight="0"
         overflowY="scroll"
@@ -48,7 +46,7 @@
           </Text>
         </VStack>
       </Stack>
-    </Stack>
+    </HSplitter>
 
     <!-- Mobile view -->
     <VStack
