@@ -1,6 +1,8 @@
 <App
+  id="app"
   layout="desktop"
   codeBehind="Main.xmlui.xs"
+  var.scrollTrigger="{ selectedMessage.value.messageId && app.scrollToTop() }"
   onMessageReceived="{ (msg) => {
     if (msg && msg.type === 'iframe-height') {
       const newHeight = Number(msg.height) + 20;
@@ -8,6 +10,7 @@
     }
   }}"
 >
+  <AppState id="selectedMessage" bucket="appState" />
   <HelloAuth
     id="auth"
     issuer="https://accounts.google.com"
@@ -32,7 +35,7 @@
   />
   <!-- AppState for iframe height -->
   <AppState id="iframeHeight" bucket="iframe" initialValue="{ {height: 300} }" />
-  
+
   <!-- DataSource for list of messages -->
   <DataSource
     id="messagesList"
