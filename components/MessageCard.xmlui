@@ -10,7 +10,8 @@
   var.date="{ headers.date || '' }"
   var.snippet="{ window.he.decode(msgData.value?.snippet || '') }"
   var.body="{ parsed.textHtml || parsed.textPlain || '' }"
-  var.useMockData="{ $props.useMockData || false }">
+  var.useMockData="{ $props.useMockData || false }"
+  var.shouldAutoSelect="{ $props.autoSelectFirstId == $props.messageId && mediaSize.sizeIndex > 1 }">
   <!-- DataSource for obtaining details of a specific message -->
   <DataSource
     when="{ $props.messageId && (useMockData || $props.accessToken) }"
@@ -20,6 +21,24 @@
 
   <!-- Using AppState for global state -->
   <AppState id="selectedMessage" bucket="appState" />
+
+  <ChangeListener
+    listenTo="{ msgData.value }"
+    onDidChange="{ () => {
+      if (msgData.value && shouldAutoSelect && selectedMessage.value.messageId !== $props.messageId) {
+        selectedMessage.update({
+          messageId: $props.messageId,
+          subject: subject,
+          fromName: fromName,
+          fromEmail: fromEmail,
+          date: date,
+          snippet: snippet,
+          body: body,
+          payload: msgData.value.payload,
+          fullMessage: msgData.value
+        })
+      }
+    } }" />
 
   <Bookmark id="{ 'msg-' + $props.messageId }">
     <Card
@@ -53,8 +72,8 @@
           </Text>
 
           <Text overflowMode="ellipsis">
-              From:
-            { " " + from || '(Unknown Sender)' }
+            From: { fromName || '(Unknown Sender)' }
+              { fromEmail ? '&lt;' + fromEmail + '>' : '' }
           </Text>
 
           <Text fontSize="smaller" color="$textColor--disabled">

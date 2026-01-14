@@ -23,6 +23,7 @@
     <Items data="{ $props.messagesList }">
       <MessageCard
         messageId="{ $item.id }"
+        autoSelectFirstId="{ $props.messagesList && $props.messagesList.length ? $props.messagesList[0].id : null }"
         accessToken="{ $props.auth.tokens.access_token }"
         useMockData="{ $props.useMockData || false }" />
     </Items>
