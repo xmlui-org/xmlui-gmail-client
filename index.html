@@ -4,7 +4,14 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://docs.xmlui.org/resources/files/for-download/xmlui/xmlui-standalone.umd.js"></script>
-    <script src="xmlui/xmlui-hello-auth.js"></script>	
+    <script src="xmlui/xmlui-hello-auth.js"></script>
+    <script src="mockData.js"></script>
+    <script>
+      window.config = {};
+      fetch("config.json")
+        .then((r) => (r.ok ? r.json() : {}))
+        .then((c) => Object.assign(window.config, c));
+    </script>
     <script type="module">
       import parseGmailMessage from "https://cdn.jsdelivr.net/npm/gmail-api-parse-message@2.1.2/+esm";
       import he from "https://cdn.jsdelivr.net/npm/he@1.2.0/+esm";
@@ -49,9 +56,9 @@ td, th { word-wrap: break-word; overflow-wrap: break-word; }
 .gmail_quote { margin: 0; padding: 0; }
 </style>
 <script>
-window.addEventListener('load', function() {    
+window.addEventListener('load', function() {
   const height = document.body.scrollHeight;
-  if (height == 0) return;  
+  if (height == 0) return;
   window.parent.postMessage({ type: 'iframe-height', height: height }, '*');
 });
 <\/script>
@@ -61,14 +68,6 @@ ${htmlContent}
 </${""}body>
 </html>`;
       };
-    </script>
-    <script src="xmlui/xmlui-hello-auth.js"></script>
-    <script src="mockData.js"></script>
-    <script>
-      window.config = {};
-      fetch("config.json")
-        .then((r) => (r.ok ? r.json() : {}))
-        .then((c) => Object.assign(window.config, c));
     </script>
   </head>
 
