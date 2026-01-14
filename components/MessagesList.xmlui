@@ -12,9 +12,8 @@
 
   <VStack
     gap="space-4"
-    height="100%"
+    height="*"
     width="100%"
-    minHeight="0"
     overflowY="auto"
   >
     <H3 marginLeft="20px">

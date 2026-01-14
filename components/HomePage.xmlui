@@ -11,8 +11,7 @@
 
   <!-- Desktop view -->
   <HSplitter
-    height="100%"
-    minHeight="0"
+    height="*"
     minPrimarySize="320px"
     initialPrimarySize="35%"
     when="{ mediaSize.sizeIndex > 1 }"
@@ -25,8 +24,7 @@
 
     <Stack
       id="messageDetailScroll"
-      height="100%"
-      minHeight="0"
+      height="*"
       overflowY="auto"
       padding="15px"
     >
