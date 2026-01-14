@@ -1,0 +1,18 @@
+{
+  "id": "msg010",
+  "threadId": "thread010",
+  "snippet": "Hi everyone, I wanted to follow up on the user feedback we received last week. We've collected over 200 responses and the insights are quite interesting...",
+  "payload": {
+    "mimeType": "text/html",
+    "headers": [
+      { "name": "From", "value": "Emma Rodriguez <emma.r@producthq.com>" },
+      { "name": "To", "value": "product-team@producthq.com" },
+      { "name": "Subject", "value": "User Feedback Analysis - December 2025" },
+      { "name": "Date", "value": "Thu, 9 Jan 2026 13:10:00 -0800" }
+    ],
+    "body": {
+      "size": 500,
+      "data": "PGRpdiBzdHlsZT0iZm9udC1mYW1pbHk6IEFyaWFsLCBzYW5zLXNlcmlmOyI+CjxoMj5Vc2VyIEZlZWRiYWNrIEFuYWx5c2lzIC0gRGVjZW1iZXIgMjAyNTwvaDI+CjxwPkhpIGV2ZXJ5b25lLDwvcD4KPHA+SSB3YW50ZWQgdG8gZm9sbG93IHVwIG9uIHRoZSB1c2VyIGZlZWRiYWNrIHdlIHJlY2VpdmVkIGxhc3Qgd2Vlay4gV2UndmUgY29sbGVjdGVkIG92ZXIgMjAwIHJlc3BvbnNlcyBhbmQgdGhlIGluc2lnaHRzIGFyZSBxdWl0ZSBpbnRlcmVzdGluZy4gSGVyZSdzIGEgYnJlYWtkb3duIG9mIHRoZSBrZXkgdGhlbWVzOjwvcD4KCjxpbWcgc3JjPSJodHRwczovL3BpY3N1bS5waG90b3MvNjAwLzQwMD9yYW5kb209NCIgYWx0PSJGZWVkYmFjayB2aXN1YWxpemF0aW9uIiBzdHlsZT0ibWF4LXdpZHRoOiAxMDAlOyBoZWlnaHQ6IGF1dG87IG1hcmdpbjogMjBweCAwOyIgLz4KCjxoMz5Ub3AgUmVxdWVzdHM6PC9oMz4KPG9sPgogIDxsaT48c3Ryb25nPkRhcmsgTW9kZTwvc3Ryb25nPiAoODcgbWVudGlvbnMpIC0gVXNlcnMgcmVhbGx5IHdhbnQgdGhpcyBmZWF0dXJlPC9saT4KICA8bGk+PHN0cm9uZz5CZXR0ZXIgTW9iaWxlIEV4cGVyaWVuY2U8L3N0cm9uZz4gKDY0IG1lbnRpb25zKSAtIEVzcGVjaWFsbHkgdGFibGV0IHN1cHBvcnQ8L2xpPgogIDxsaT48c3Ryb25nPktleWJvYXJkIFNob3J0Y3V0czwvc3Ryb25nPiAoNTIgbWVudGlvbnMpIC0gUG93ZXIgdXNlcnMgd2FudCBlZmZpY2llbmN5PC9saT4KICA8bGk+PHN0cm9uZz5FeHBvcnQgRnVuY3Rpb25hbGl0eTwvc3Ryb25nPiAoNDEgbWVudGlvbnMpIC0gUERGIGFuZCBDU1YgZXhwb3J0czwvbGk+CjwvbD4KCjxoMz5QYWluIFBvaW50czo8L2gzPgo8cD5TZXZlcmFsIHVzZXJzIG1lbnRpb25lZCB0aGF0IHRoZSBsb2FkaW5nIHRpbWVzIGZvciBsYXJnZSBkYXRhc2V0cyBjb3VsZCBiZSBpbXByb3ZlZC4gV2Ugc2hvdWxkIHByaW9yaXRpemUgcGVyZm9ybWFuY2Ugb3B0aW1pemF0aW9uIGluIHRoZSBuZXh0IHNwcmludC48L3A+Cgo8YmxvY2txdW90ZSBzdHlsZT0iYm9yZGVyLWxlZnQ6IDRweCBzb2xpZCAjY2NjOyBwYWRkaW5nLWxlZnQ6IDE1cHg7IG1hcmdpbjogMjBweCAwOyBjb2xvcjogIzY2NjsiPgoiSSBsb3ZlIHRoZSBwcm9kdWN0LCBidXQgd2FpdGluZyA1KyBzZWNvbmRzIGZvciBteSBkYXNoYm9hcmQgdG8gbG9hZCBpcyBmcnVzdHJhdGluZy4gUGxlYXNlIG9wdGltaXplIHRoaXMhIiAtIFVzZXIgIzE0Mgo8L2Jsb2NrcXVvdGU+CgoKPHA+SSdsbCBzY2hlZHVsZSBhIHJldmlldyBtZWV0aW5nIHRvIGRpc2N1c3MgcHJpb3JpdGl6YXRpb24uIEZ1bGwgcmVwb3J0IGF0dGFjaGVkIGluIHRoZSBmb2xsb3ctdXAgZW1haWwuPC9wPgoKPHA+VGhhbmtzLDxici8+RW1tYTwvcD4KPC9kaXY+"
+    }
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "id": "msg004",
+  "threadId": "thread004",
+  "snippet": "The new feature is deployed!",
+  "payload": {
+    "mimeType": "text/html",
+    "headers": [
+      { "name": "From", "value": "Deploy Bot <deploy@platform.io>" },
+      { "name": "To", "value": "notifications@platform.io" },
+      { "name": "Subject", "value": "Deployment Successful - v2.3.1" },
+      { "name": "Date", "value": "Fri, 10 Jan 2026 11:45:00 -0800" }
+    ],
+    "body": {
+      "size": 500,
+      "data": "PGRpdiBzdHlsZT0iZm9udC1mYW1pbHk6IEFyaWFsLCBzYW5zLXNlcmlmOyI+CjxoMyBzdHlsZT0iY29sb3I6IGdyZWVuOyI+RGVwbG95bWVudCBTdWNjZXNzZnVsPC9oMz4KPHA+VGhlIG5ldyBmZWF0dXJlIGlzIGRlcGxveWVkITwvcD4KPHA+PHN0cm9uZz5WZXJzaW9uOjwvc3Ryb25nPiB2Mi4zLjE8L3A+CjxwPjxzdHJvbmc+RW52aXJvbm1lbnQ6PC9zdHJvbmc+IFByb2R1Y3Rpb248L3A+CjxwPjxzdHJvbmc+RHVyYXRpb246PC9zdHJvbmc+IDNtIDQyczwvcD4KPC9kaXY+"
+    }
+  }
+}

@@ -2,38 +2,32 @@
     <AppState id="selectedMessage" bucket="appState" />
     <AppState id="iframeHeight" bucket="iframe" />
 
-        <!-- Header -->
+    <VStack gap="0">
         <Text variant="strong" fontSize="x-large" maxLines="2">
             { selectedMessage.value.subject || '(No Subject)' }
         </Text>
 
-        <HStack wrapContent="true" gap="10px" verticalAlignment="center">
-            <Text overflowMode="ellipsis">
-                <strong>
-                    From:
-                </strong>
-                {selectedMessage.value.fromName}
-                        {selectedMessage.value.fromEmail ? ' &lt;' + selectedMessage.value.fromEmail + '&gt;' : '' }
-            </Text>
-            <SpaceFiller />
-            <Text fontSize="smaller" color="$textColor--disabled">
-                { formatDate(selectedMessage.value.date || 'Jan 01, 2000', "MMM dd, yyyy 'at' HH:mm") }
-            </Text>
+        <Text overflowMode="ellipsis">
+            From:
+            {selectedMessage.value.fromName}
+            {selectedMessage.value.fromEmail ? ' &lt;' + selectedMessage.value.fromEmail + '&gt;' : '' }
+        </Text>
 
-        </HStack>
+        <Text fontSize="smaller" color="$textColor--disabled">
+            { formatDate(selectedMessage.value.date || 'Jan 01, 2000', "MMM dd, yyyy 'at' HH:mm") }
+        </Text>
+    </VStack>
 
-        <!-- Divider -->
-        <ContentSeparator
-            orientation="horizontal"
-            thickness="1px"
-        />
+    <!-- Divider -->
+    <ContentSeparator
+        orientation="horizontal"
+        thickness="1px" />
 
-        <!-- Message body -->
-        <IFrame        
-            when="{selectedMessage.value.body.length}"
-            srcdoc="{ window.wrapEmailHtml(window.sanitizeEmail(selectedMessage.value.body || ''), mediaSize.sizeIndex <= 1) }"
-            sandbox="allow-scripts allow-popups allow-popups-to-escape-sandbox"
-            height="{iframeHeight.value.height}px"                       
-        />
+    <!-- Message body -->
+    <IFrame
+        when="{selectedMessage.value.body.length}"
+        srcdoc="{ window.wrapEmailHtml(window.sanitizeEmail(selectedMessage.value.body || ''), mediaSize.sizeIndex <= 1) }"
+        sandbox="allow-scripts allow-popups allow-popups-to-escape-sandbox"
+        height="{iframeHeight.value.height}px" />
 
 </Component>

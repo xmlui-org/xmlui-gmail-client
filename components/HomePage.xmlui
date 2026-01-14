@@ -21,6 +21,7 @@
     <MessagesList
       auth="{ auth }"
       messagesList="{ messagesList }"
+      useMockData="{ $props.useMockData || false }"
     />
 
     <Stack
@@ -49,6 +50,7 @@
     <MessagesList
       auth="{ auth }"
       messagesList="{ messagesList }"
+      useMockData="{ $props.useMockData || false }"
     />
 
     <ModalDialog
