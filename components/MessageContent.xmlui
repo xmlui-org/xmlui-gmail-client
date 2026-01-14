@@ -2,7 +2,6 @@
     <AppState id="selectedMessage" bucket="appState" />
     <AppState id="iframeHeight" bucket="iframe" />
 
-    <VStack>
         <!-- Header -->
         <Text variant="strong" fontSize="x-large" maxLines="2">
             { selectedMessage.value.subject || '(No Subject)' }
@@ -34,8 +33,7 @@
             when="{selectedMessage.value.body.length}"
             srcdoc="{ window.wrapEmailHtml(window.sanitizeEmail(selectedMessage.value.body || ''), mediaSize.sizeIndex <= 1) }"
             sandbox="allow-scripts allow-popups allow-popups-to-escape-sandbox"
-            height="{iframeHeight.value.height}px"  
+            height="{iframeHeight.value.height}px"                       
         />
-    </VStack>
 
 </Component>

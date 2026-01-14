@@ -10,7 +10,13 @@
     }
   </script>
 
-  <VStack gap="space-4" width="100%" minHeight="0">
+  <VStack
+    gap="space-4"
+    height="100%"
+    width="100%"
+    minHeight="0"
+    overflowY="auto"
+  >
     <H3 marginLeft="20px">
       Messages ({ getMessageRangeText() })
     </H3>
