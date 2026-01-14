@@ -1,0 +1,18 @@
+{
+  "id": "msg001",
+  "threadId": "thread001",
+  "snippet": "Hi team, I wanted to share the Q1 roadmap with everyone. We have some exciting features planned including the new dashboard redesign and mobile app improvements.",
+  "payload": {
+    "mimeType": "text/html",
+    "headers": [
+      { "name": "From", "value": "Sarah Chen <sarah.chen@techcorp.com>" },
+      { "name": "To", "value": "team@techcorp.com" },
+      { "name": "Subject", "value": "Q1 2026 Product Roadmap" },
+      { "name": "Date", "value": "Mon, 13 Jan 2026 09:15:00 -0800" }
+    ],
+    "body": {
+      "size": 500,
+      "data": "PGRpdiBzdHlsZT0iZm9udC1mYW1pbHk6IEFyaWFsLCBzYW5zLXNlcmlmOyI+CjxoMj5RMSA yMDI2IFByb2R1Y3QgUm9hZG1hcDwvaDI+CjxwPkhpIHRlYW0sPC9wPgo8cD5JIHdhbnRlZCB0byBzaGFyZSB0aGUgUTEgcm9hZG1hcCB3aXRoIGV2ZXJ5b25lLiBXZSBoYXZlIHNvbWUgZXhjaXRpbmcgZmVhdHVyZXMgcGxhbm5lZCBpbmNsdWRpbmcgdGhlIG5ldyBkYXNoYm9hcmQgcmVkZXNpZ24gYW5kIG1vYmlsZSBhcHAgaW1wcm92ZW1lbnRzLjwvcD4KPGltZyBzcmM9Imh0dHBzOi8vcGljc3VtLnBob3Rvcy82MDAvMzAwP3JhbmRvbT0xIiBhbHQ9IlJvYWRtYXAgdmlzdWFsaXphdGlvbiIgc3R5bGU9Im1heC13aWR0aDogMTAwJTsgaGVpZ2h0OiBhdXRvOyBtYXJnaW46IDIwcHggMDsiIC8+CjxoMz5LZXkgSW5pdGlhdGl2ZXM6PC9oMz4KPHVsPgogIDxsaT48c3Ryb25nPkRhc2hib2FyZCBSZWRlc2lnbjwvc3Ryb25nPiAtIE1vZGVybiBVSSB3aXRoIGltcHJvdmVkIGFuYWx5dGljczwvbGk+CiAgPGxpPjxzdHJvbmc+TW9iaWxlIEFwcCB2Mi4wPC9zdHJvbmc+IC0gQ29tcGxldGUgb3ZlcmhhdWwgd2l0aCBvZmZsaW5lIHN1cHBvcnQ8L2xpPgogIDxsaT48c3Ryb25nPkFQSSBJbnRlZ3JhdGlvbjwvc3Ryb25nPiAtIE5ldyBwYXJ0bmVyIGludGVncmF0aW9uczwvbGk+CjwvdWw+CjxwPlBsZWFzZSByZXZpZXcgYW5kIGxldCBtZSBrbm93IHlvdXIgdGhvdWdodHMhPC9wPgo8cD5CZXN0LDxici8+U2FyYWg8L3A+CjwvZGl2Pg=="
+    }
+  }
+}

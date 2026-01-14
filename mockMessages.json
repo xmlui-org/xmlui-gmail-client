@@ -1,0 +1,16 @@
+{
+  "messages": [
+    { "id": "msg001", "threadId": "thread001" },
+    { "id": "msg002", "threadId": "thread002" },
+    { "id": "msg003", "threadId": "thread003" },
+    { "id": "msg004", "threadId": "thread004" },
+    { "id": "msg005", "threadId": "thread005" },
+    { "id": "msg006", "threadId": "thread006" },
+    { "id": "msg007", "threadId": "thread007" },
+    { "id": "msg008", "threadId": "thread008" },
+    { "id": "msg009", "threadId": "thread009" },
+    { "id": "msg010", "threadId": "thread010" }
+  ],
+  "nextPageToken": null,
+  "resultSizeEstimate": 10
+}

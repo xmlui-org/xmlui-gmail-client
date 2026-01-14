@@ -1,0 +1,18 @@
+{
+  "id": "msg007",
+  "threadId": "thread007",
+  "snippet": "Quick reminder about tomorrow's standup at 10am. Please prepare your updates!",
+  "payload": {
+    "mimeType": "text/html",
+    "headers": [
+      { "name": "From", "value": "Mike Johnson <mike.j@startup.io>" },
+      { "name": "To", "value": "engineering@startup.io" },
+      { "name": "Subject", "value": "Standup Reminder - Tomorrow 10am" },
+      { "name": "Date", "value": "Sun, 12 Jan 2026 16:30:00 -0800" }
+    ],
+    "body": {
+      "size": 500,
+      "data": "PGRpdiBzdHlsZT0iZm9udC1mYW1pbHk6IEFyaWFsLCBzYW5zLXNlcmlmOyI+CjxwPlF1aWNrIHJlbWluZGVyIGFib3V0IHRvbW9ycm93J3Mgc3RhbmR1cCBhdCAxMGFtLjwvcD4KPHA+UGxlYXNlIHByZXBhcmUgeW91ciB1cGRhdGVzITwvcD4KPHA+LSBNaWtlPC9wPgo8L2Rpdj4="
+    }
+  }
+}

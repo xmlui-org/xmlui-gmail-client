@@ -11,12 +11,11 @@
   </script>
 
   <VStack
-    gap="space-4"
+    gap="0"
     height="100%"
     width="100%"
     minHeight="0"
-    overflowY="auto"
-  >
+    overflowY="auto">
     <H3 marginLeft="20px">
       Messages ({ getMessageRangeText() })
     </H3>
@@ -25,7 +24,7 @@
       <MessageCard
         messageId="{ $item.id }"
         accessToken="{ $props.auth.tokens.access_token }"
-      />
+        useMockData="{ $props.useMockData || false }" />
     </Items>
 
     <CustomPagination when="{ $props.auth.user }" />
