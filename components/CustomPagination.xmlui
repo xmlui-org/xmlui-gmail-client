@@ -39,7 +39,7 @@
       label="◀"
       variant="ghost"
       size="xs"
-      enabled="{ pagination.value.currentPage > 0 }"
+      enabled="{ paginationState.value.currentPage > 0 }"
       onClick="{ handlePrevPage() }"
     />
     
@@ -48,14 +48,14 @@
       fontWeight="fontWeight-medium"
       padding="space-2"
     >
-      Page { pagination.value.currentPage + 1 }
+      Page { paginationState.value.currentPage + 1 }
     </Text>
     
     <Button
       label="▶"
       variant="ghost"
       size="xs"
-      enabled="{ pagination.value.nextPageToken !== '' }"
+      enabled="{ paginationState.value.nextPageToken !== '' }"
       onClick="{ handleNextPage() }"
     />
   </HStack>
