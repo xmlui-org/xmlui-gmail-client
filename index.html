@@ -10,7 +10,10 @@
       window.config = {};
       fetch("config.json")
         .then((r) => (r.ok ? r.json() : {}))
-        .then((c) => Object.assign(window.config, c));
+        .then((c) => {
+          Object.assign(window.config, c);
+          window.config.appGlobals.apiUrl = window.location.origin; //use actual port number
+        });
     </script>
     <script type="module">
       import parseGmailMessage from "https://cdn.jsdelivr.net/npm/gmail-api-parse-message@2.1.2/+esm";

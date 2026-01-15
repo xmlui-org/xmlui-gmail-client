@@ -43,8 +43,7 @@
 
     <MessagesList
       auth="{ auth }"
-      messagesList="{ messagesList }"
-      useMockData="{ $props.useMockData || false }"
+      messagesList="{ messagesList }"   
     />
 
     <Stack
@@ -80,8 +79,7 @@
   <Fragment when="{ mediaSize.sizeIndex <= 1 }">
     <MessagesList
       auth="{ auth }"
-      messagesList="{ messagesList }"
-      useMockData="{ $props.useMockData || false }"
+      messagesList="{ messagesList }"    
     />
 
     <ModalDialog

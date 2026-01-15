@@ -1,28 +1,17 @@
 <App
   id="app"
   layout="desktop"
-  var.useMockData="{ false }"
   scrollWholePage="false"
   codeBehind="Main.xmlui.xs"
-  var.mockAuthData="{ useMockData && window.mockGmailData ? {
-    user: window.mockGmailData.mockUser,
-    tokens: window.mockGmailData.mockTokens,
-    login: () => {},
-    logout: () => { window.location.reload(); }
-  } : null }"
-  onMessageReceived="{ (msg) => {
-    if (msg && msg.type === 'iframe-height') {
-      const newHeight = Number(msg.height) + 20;
-      iframeHeight.update( { height: newHeight} );
-    }
-  }}"
+  var.authObject="{ getMockAuthData() || auth }"
+  onMessageReceived="{ (msg) => handleMessageReceived(msg, iframeHeight)}"  
 >
   <AppState id="selectedMessage" bucket="appState" />
 
   <!-- Real authentication (only when not using mock data) -->
   <HelloAuth
     id="auth"
-    when="{ !useMockData }"
+    when="{ !window.config.useMockData }"
     issuer="https://accounts.google.com"
     client_id="{window.config.__GMAIL_CLIENT_ID__}"
     client_secret="{window.config.__GMAIL_CLIENT_SECRET__}"
@@ -31,6 +20,7 @@
     storage="session"
     debug="true"
   />
+
   <!-- AppState for pagination -->
   <AppState
     id="pagination"
@@ -46,30 +36,19 @@
   <!-- AppState for iframe height -->
   <AppState id="iframeHeight" bucket="iframe" initialValue="{ {height: 300} }" />
 
-  <!-- Real DataSource for list of messages -->
+  <!-- DataSource for list of messages (real or mock) -->
   <DataSource
     id="messagesList"
-    when="{ !useMockData && auth.user }"
-    url="{
-      'https://gmail.googleapis.com/gmail/v1/users/me/messages?maxResults=' + pagination.value.pageSize +
-      (pagination.value.currentPageToken ? '&pageToken=' + pagination.value.currentPageToken : '')
-    }"
-    headers="{ { Authorization: 'Bearer ' + auth.tokens.access_token } }"
-    transformResult="{ transformMessages }"
-  />
-
-  <!-- Mock DataSource for list of messages -->
-  <DataSource
-    id="mockMessagesList"
-    when="{ useMockData }"
-    url="/mockMessages.json"
+    when="{ authObject.user }"
+    url="{ getMessagesUrl() }"
+    headers="{ getMessagesHeaders() }"
     transformResult="{ transformMessages }"
   />
 
   <AppHeader>
     <HStack
       verticalAlignment="center"
-      when="{ !(useMockData ? mockAuthData?.user : auth.user) || mediaSize.sizeIndex >= 2 }"
+      when="{ !authObject.user || mediaSize.sizeIndex >= 2 }"
     >
       <Avatar
         backgroundColor="transparent"
@@ -82,20 +61,20 @@
     </HStack>
 
     <template name="profileMenuTemplate">
-      <HStack verticalAlignment="center" when="{ useMockData ? mockAuthData?.user : auth.user }">
+      <HStack verticalAlignment="center" when="{authObject.user }">
         <Text when="{ mediaSize.size !== 'xs' }" fontSize="smaller">
-          {(useMockData ? mockAuthData : auth).user.email}
+          {authObject.user.email}
         </Text>
         <Button
           icon="refresh"
           variant="outlined"
-          onClick="{ (useMockData ? mockMessagesList : messagesList).refetch() }"
-          enabled="{ !(useMockData ? mockMessagesList : messagesList).inProgress }"
+          onClick="{ messagesList.refetch() }"
+          enabled="{ !messagesList.inProgress }"
         >
           Refresh
         </Button>
         <Button
-          onClick="{ () => { if (useMockData) { window.location.reload(); } else { auth.logout(); window.location.reload(); } } }"
+          onClick="{ () => {  authObject.logout(); window.location.reload(); } }"
           variant="outlined"
           icon="exit"
         >
@@ -108,43 +87,28 @@
 
   <!-- Error panel -->
   <ErrorPanel
-    error="{ (useMockData ? mockMessagesList : messagesList).error }"
-    auth="{ useMockData ? mockAuthData : auth }"
-    when="{ (useMockData ? mockMessagesList : messagesList).error!=null }"
+    error="{ messagesList.error }"
+    auth="{ authObject }"
+    when="{ messagesList.error!=null }"
   />
 
   <!-- Loading state -->
-  <Text when="{ (useMockData ? mockMessagesList : messagesList).inProgress }" margin="auto">
+  <Text when="{ messagesList.inProgress }" margin="auto">
     Loading...
   </Text>
 
-<!--
-  <VStack margin="auto" gap="10px" >
-    <Text>Mock Mode: {useMockData ? 'ON' : 'OFF'}</Text>
-    <Text>Mock Auth User: {mockAuthData?.user?.email || 'none'}</Text>
-    <Text>Mock Messages Value: {JSON.stringify(mockMessagesList?.value)}</Text>
-    <Text>Mock Messages Loaded: {mockMessagesList?.value?.length || 0}</Text>
-    <Text>Mock Messages Error is null: {mockMessagesList?.error == null ? 'yes' : 'no'}</Text>
-    <Text>Mock Messages Error: {JSON.stringify(mockMessagesList?.error)}</Text>
-    <Text>Mock Messages InProgress: {mockMessagesList?.inProgress ? 'yes' : 'no'}</Text>
-    <Text>Mock Messages Loaded Bool: {mockMessagesList?.loaded ? 'yes' : 'no'}</Text>
-    <Text>Should show pages: {((useMockData ? mockAuthData?.user : auth.user) && (useMockData ? mockMessagesList : messagesList).error==null && !(useMockData ? mockMessagesList : messagesList).inProgress) ? 'YES' : 'NO'}</Text>
-  </VStack>
-  -->
-
   <!-- Not authenticated -->
-  <LoginCard auth="{ auth }" when="{ !useMockData && !auth.user }" />
+  <LoginCard auth="{ authObject }" when="{ !authObject.user }" />
 
   <Pages
-    when="{ (useMockData ? mockAuthData?.user : auth.user) && (useMockData ? mockMessagesList : messagesList).error==null && !(useMockData ? mockMessagesList : messagesList).inProgress}"
+     when="{ authObject.user && messagesList.error==null && !messagesList.inProgress}"
   >
     <Page url="/" height="100%" minHeight="0">
       <!-- Home page -->
       <VStack height="100%" minHeight="0">
         <HomePage
-          auth="{ useMockData ? mockAuthData : auth }"
-          messagesList="{ useMockData ? mockMessagesList.value : messagesList.value }"
-          useMockData="{ useMockData }"
+          auth="{ authObject }"
+          messagesList="{ messagesList.value }"         
         />
       </VStack>
     </Page>
@@ -162,7 +126,7 @@
       overflowMode="ellipsis"
       width="150px"
     >
-      {(useMockData ? mockAuthData : auth).user.email}
+      {authObject.user.email}
     </Text>
   </Footer>
 </App>

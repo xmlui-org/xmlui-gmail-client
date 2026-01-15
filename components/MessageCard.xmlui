@@ -10,7 +10,7 @@
   var.date="{ headers.date || '' }"
   var.snippet="{ window.he.decode(msgData.value?.snippet || '') }"
   var.body="{ parsed.textHtml || parsed.textPlain || '' }"
-  var.useMockData="{ $props.useMockData || false }"
+  var.useMockData="{ window.config.useMockData }"
   var.shouldAutoSelect="{ $props.autoSelectFirstId == $props.messageId && mediaSize.sizeIndex > 1 }">
   <!-- DataSource for obtaining details of a specific message -->
   <DataSource
