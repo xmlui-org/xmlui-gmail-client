@@ -17,7 +17,7 @@
             <Text when="{ $props.error }" variant="code" fontSize="smaller">
                 { JSON.stringify($props.error) }
             </Text>
-            <Button onClick="{ $props.auth.logout(); window.location.reload() }" size="small">
+            <Button onClick="{ $props.authObject.logout(); window.location.reload() }" size="small">
                 Re-authenticate
             </Button>
         </CVStack>

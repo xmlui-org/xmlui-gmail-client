@@ -11,10 +11,10 @@ function getMockAuthData() {
 
 function transformMessages(data) {
   const newNextToken = data.nextPageToken || "";
-  const shouldUpdateNextToken = pagination.value.nextPageToken !== newNextToken;
+  const shouldUpdateNextToken = paginationState.value.nextPageToken !== newNextToken;
 
   if (shouldUpdateNextToken) {
-    pagination.update({
+    paginationState.update({
       nextPageToken: newNextToken,
     });
   }
@@ -27,9 +27,9 @@ function getMessagesUrl() {
 
   return (
     "https://gmail.googleapis.com/gmail/v1/users/me/messages?maxResults=" +
-    pagination.value.pageSize +
-    (pagination.value.currentPageToken
-      ? "&pageToken=" + pagination.value.currentPageToken
+    paginationState.value.pageSize +
+    (paginationState.value.currentPageToken
+      ? "&pageToken=" + paginationState.value.currentPageToken
       : "")
   );
 }

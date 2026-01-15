@@ -1,11 +1,11 @@
 <Component name="MessagesList">
-  <AppState id="pagination" bucket="messagePagination" />
+  <AppState id="paginationState" />
 
   <script>
     function getMessageRangeText() {
       const len = $props.messagesList?.length ?? 0;
       if (!len) return '0';
-      const start = pagination.value.currentPage * pagination.value.pageSize + 1;
+      const start = paginationState.value.currentPage * paginationState.value.pageSize + 1;
       return `${start}-${start + len - 1}`;
     }
   </script>
@@ -24,10 +24,10 @@
       <MessageCard
         messageId="{ $item.id }"
         autoSelectFirstId="{ ($props.messagesList || [])[0]?.id  }"
-        accessToken="{ $props.auth.tokens.access_token }"
+        accessToken="{ $props.authObject.tokens.access_token }"
       />
     </Items>
 
-    <CustomPagination when="{ $props.auth.user }" />
+    <CustomPagination when="{ $props.authObject.user }" />
   </VStack>
 </Component>

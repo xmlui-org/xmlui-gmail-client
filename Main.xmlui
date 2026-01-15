@@ -4,9 +4,9 @@
   scrollWholePage="false"
   codeBehind="Main.xmlui.xs"
   var.authObject="{ getMockAuthData() || auth }"
-  onMessageReceived="{ (msg) => handleMessageReceived(msg, iframeHeight)}"  
+  onMessageReceived="{ (msg) => handleMessageReceived(msg, iframeState)}"
 >
-  <AppState id="selectedMessage" bucket="appState" />
+  <AppState id="selectedMessage" />
 
   <!-- Real authentication (only when not using mock data) -->
   <HelloAuth
@@ -23,8 +23,7 @@
 
   <!-- AppState for pagination -->
   <AppState
-    id="pagination"
-    bucket="messagePagination"
+    id="paginationState"
     initialValue="{ {
     currentPage: 0,
     pageSize: window.config.PAGE_SIZE,
@@ -34,7 +33,7 @@
   } }"
   />
   <!-- AppState for iframe height -->
-  <AppState id="iframeHeight" bucket="iframe" initialValue="{ {height: 300} }" />
+  <AppState id="iframeState" initialValue="{ {height: 300} }" />
 
   <!-- DataSource for list of messages (real or mock) -->
   <DataSource
@@ -88,7 +87,7 @@
   <!-- Error panel -->
   <ErrorPanel
     error="{ messagesList.error }"
-    auth="{ authObject }"
+    authObject="{ authObject }"
     when="{ messagesList.error!=null }"
   />
 
@@ -98,17 +97,17 @@
   </Text>
 
   <!-- Not authenticated -->
-  <LoginCard auth="{ authObject }" when="{ !authObject.user }" />
+  <LoginCard authObject="{ authObject }" when="{ !authObject.user }" />
 
   <Pages
-     when="{ authObject.user && messagesList.error==null && !messagesList.inProgress}"
+    when="{ authObject.user && messagesList.error==null && !messagesList.inProgress}"
   >
     <Page url="/" height="100%" minHeight="0">
       <!-- Home page -->
       <VStack height="100%" minHeight="0">
         <HomePage
-          auth="{ authObject }"
-          messagesList="{ messagesList.value }"         
+          authObject="{ authObject }"
+          messagesList="{ messagesList.value }"
         />
       </VStack>
     </Page>

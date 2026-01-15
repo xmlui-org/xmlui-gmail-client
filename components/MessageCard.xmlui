@@ -39,7 +39,7 @@
   />
 
   <!-- Using AppState for global state -->
-  <AppState id="selectedMessage" bucket="appState" />
+  <AppState id="selectedMessage" />
 
   <!--Auto-select first message for desktop view-->
   <ChangeListener

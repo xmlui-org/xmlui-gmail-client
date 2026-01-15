@@ -1,9 +1,9 @@
 <Component
   name="HomePage"
-  var.auth="{ $props.auth } "
+  var.authObject="{ $props.authObject } "
   var.messagesList="{ $props.messagesList }"
 >
-  <AppState id="selectedMessage" bucket="appState" />
+  <AppState id="selectedMessage" />
 
   <ChangeListener
     listenTo="{ selectedMessage.value.messageId }"
@@ -20,7 +20,7 @@
   >
 
     <MessagesList
-      auth="{ auth }"
+      authObject="{ authObject }"
       messagesList="{ messagesList }"   
     />
 
@@ -38,7 +38,7 @@
   <!-- Mobile view -->
   <Fragment when="{ mediaSize.sizeIndex <= 1 }">
     <MessagesList
-      auth="{ auth }"
+      authObject="{ authObject }"
       messagesList="{ messagesList }"    
     />
 

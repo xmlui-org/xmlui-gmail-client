@@ -1,6 +1,6 @@
 <Component name="MessageContent">
-    <AppState id="selectedMessage" bucket="appState" />
-    <AppState id="iframeHeight" bucket="iframe" />
+    <AppState id="selectedMessage" />
+    <AppState id="iframeState" />
 
     <VStack gap="0">
         <Text variant="strong" fontSize="x-large" maxLines="2">
@@ -28,6 +28,6 @@
         when="{selectedMessage.value.body.length}"
         srcdoc="{ window.wrapEmailHtml(window.sanitizeEmail(selectedMessage.value.body || ''), mediaSize.sizeIndex <= 1) }"
         sandbox="allow-scripts allow-popups allow-popups-to-escape-sandbox"
-        height="{iframeHeight.value.height}px" />
+        height="{iframeState.value.height}px" />
 
 </Component>

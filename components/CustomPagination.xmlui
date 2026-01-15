@@ -1,19 +1,19 @@
 <Component name="CustomPagination">
-  <AppState id="pagination" bucket="messagePagination" />
+  <AppState id="paginationState" />
 
   <script>
     function handlePrevPage() {
-      const currentState = pagination.value;
+      const currentState = paginationState.value;
       const newPage = currentState.currentPage - 1;
       
       if (newPage === 0) {
-        pagination.update({          
+        paginationState.update({          
           currentPage: 0,
           currentPageToken: '',
           prevPageToken: ''
         });
       } else {
-        pagination.update({          
+        paginationState.update({          
           currentPage: newPage,
           currentPageToken: currentState.prevPageToken,
           prevPageToken: ''
@@ -22,11 +22,11 @@
     }
 
     function handleNextPage() {
-      const currentState = pagination.value;
+      const currentState = paginationState.value;
       
       if (!currentState.nextPageToken) return;
       
-      pagination.update({        
+      paginationState.update({        
         currentPage: currentState.currentPage + 1,
         prevPageToken: currentState.currentPageToken,
         currentPageToken: currentState.nextPageToken
