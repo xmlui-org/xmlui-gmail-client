@@ -10,92 +10,94 @@
   var.date="{ headers.date || '' }"
   var.snippet="{ window.he.decode(msgData.value?.snippet || '') }"
   var.body="{ parsed.textHtml || parsed.textPlain || '' }"
-  var.useMockData="{ window.config.useMockData }"
-  var.shouldAutoSelect="{ $props.autoSelectFirstId == $props.messageId && mediaSize.sizeIndex > 1 }">
+>
+
+  <script>
+    function selectMessage() {
+    if (selectedMessage.value.messageId !== $props.messageId && msgData.value) {
+      selectedMessage.update({
+        messageId: $props.messageId,
+        subject: subject,
+        fromName: fromName,
+        fromEmail: fromEmail,
+        date: date,
+        snippet: snippet,
+        body: body,
+        payload: msgData.value.payload,
+        fullMessage: msgData.value
+        });
+      }
+    }
+  </script>
+
   <!-- DataSource for obtaining details of a specific message -->
   <DataSource
-    when="{ $props.messageId && (useMockData || $props.accessToken) }"
-    url="{ useMockData ? '/mockMessageDetails/' + $props.messageId + '.json' : 'https://gmail.googleapis.com/gmail/v1/users/me/messages/' + $props.messageId }"
-    headers="{ useMockData ? {} : { Authorization: 'Bearer ' + $props.accessToken } }"
-    id="msgData" />
+    when="{ $props.messageId && (window.config.useMockData || $props.accessToken) }"
+    url="{ window.config.useMockData ? '/mockMessageDetails/' + $props.messageId + '.json' : 'https://gmail.googleapis.com/gmail/v1/users/me/messages/' + $props.messageId }"
+    headers="{ window.config.useMockData ? {} : { Authorization: 'Bearer ' + $props.accessToken } }"
+    id="msgData"
+  />
 
   <!-- Using AppState for global state -->
   <AppState id="selectedMessage" bucket="appState" />
 
+  <!--Auto-select first message for desktop view-->
   <ChangeListener
     listenTo="{ msgData.value }"
     onDidChange="{ () => {
-      if (msgData.value && shouldAutoSelect && selectedMessage.value.messageId !== $props.messageId) {
-        selectedMessage.update({
-          messageId: $props.messageId,
-          subject: subject,
-          fromName: fromName,
-          fromEmail: fromEmail,
-          date: date,
-          snippet: snippet,
-          body: body,
-          payload: msgData.value.payload,
-          fullMessage: msgData.value
-        })
+      if ( mediaSize.sizeIndex > 1 && 
+           $props.autoSelectFirstId == $props.messageId) {
+           selectMessage(); 
       }
-    } }" />
+    } }"
+  />
 
-  <Bookmark id="{ 'msg-' + $props.messageId }">
-    <Card
-      cursor="pointer"
-      borderColor="{selectedMessage.value.messageId == $props.messageId ? '$textColor--disabled' : ''}"
-      onClick="{
+  <Card
+    cursor="pointer"
+    borderColor="{selectedMessage.value.messageId == $props.messageId ? '$textColor--disabled' : ''}"
+    onClick="{
       if (msgData.value) {
-        selectedMessage.update({
-          messageId: $props.messageId,
-          subject: subject,
-          fromName: fromName,
-          fromEmail: fromEmail,
-          date: date,
-          snippet: snippet,
-          body: body,
-          payload: msgData.value.payload,
-          fullMessage: msgData.value
-        })
+        selectMessage();
       }
-    }">
-      <VStack>
+    }"
+  >
+    <VStack>
 
-        <Text when="{ msgData.loading }">
-          📨 Loading...
+      <Text when="{ msgData.loading }">
+        📨 Loading...
+      </Text>
+
+      <VStack when="{ msgData.value }" gap="0">
+
+        <Text variant="strong" fontSize="larger" overflowMode="ellipsis">
+          { subject || '(No Subject)' }
         </Text>
 
-        <VStack when="{ msgData.value }" gap="0">
-
-          <Text variant="strong" fontSize="larger" overflowMode="ellipsis">
-            { subject || '(No Subject)' }
-          </Text>
-
-          <Text overflowMode="ellipsis">
-            From: { fromName || '(Unknown Sender)' }
+        <Text overflowMode="ellipsis">
+          From: { fromName || '(Unknown Sender)' }
               { fromEmail ? '&lt;' + fromEmail + '>' : '' }
-          </Text>
+        </Text>
 
-          <Text fontSize="smaller" color="$textColor--disabled">
-            { formatDate(date, "MMM dd, yyyy HH:mm") }
-          </Text>
+        <Text fontSize="smaller" color="$textColor--disabled">
+          { formatDate(date, "MMM dd, yyyy HH:mm") }
+        </Text>
 
-          <!-- Snippet -->
-          <Text fontSize="smaller" maxLines="2">
-            { snippet }
-          </Text>
-        </VStack>
-
-        <!-- Error state -->
-        <VStack when="{ msgData.error!=null }">
-          <Text variant="strong" color="attention">
-            ❌ Error loading message
-          </Text>
-          <Text fontSize="smaller">
-            { msgData.error.message || JSON.stringify(msgData.error) }
-          </Text>
-        </VStack>
+        <!-- Snippet -->
+        <Text fontSize="smaller" maxLines="2">
+          { snippet }
+        </Text>
       </VStack>
-    </Card>
-  </Bookmark>
+
+      <!-- Error state -->
+      <VStack when="{ msgData.error!=null }">
+        <Text variant="strong" color="attention">
+          ❌ Error loading message
+        </Text>
+        <Text fontSize="smaller">
+          { msgData.error.message || JSON.stringify(msgData.error) }
+        </Text>
+      </VStack>
+    </VStack>
+  </Card>
+
 </Component>

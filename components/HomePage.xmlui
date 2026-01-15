@@ -4,32 +4,10 @@
   var.messagesList="{ $props.messagesList }"
 >
   <AppState id="selectedMessage" bucket="appState" />
-  <AppState id="selectionUi" initialValue="{ { hiding: false } }" />
+
   <ChangeListener
     listenTo="{ selectedMessage.value.messageId }"
     onDidChange="{ messageDetailScroll?.scrollToTop('smooth') }"
-  />
-  <ChangeListener
-    listenTo="{ messagesList }"
-    onDidChange="{ () => {
-      if (mediaSize.sizeIndex <= 1) {
-        selectionUi.update({ hiding: false });
-      } else if (messagesList && messagesList.length) {
-        selectionUi.update({ hiding: true });
-      } else {
-        selectionUi.update({ hiding: false });
-      }
-    } }"
-  />
-  <ChangeListener
-    listenTo="{ selectedMessage.value.messageId }"
-    onDidChange="{ () => {
-      if (mediaSize.sizeIndex <= 1) {
-        selectionUi.update({ hiding: false });
-      } else if (selectionUi.value.hiding && selectedMessage.value.messageId) {
-        selectionUi.update({ hiding: false });
-      }
-    } }"
   />
 
   <!-- Desktop view -->
@@ -53,25 +31,7 @@
       overflowY="auto"
       padding="15px"
     >
-      <Text
-        when="{ selectionUi.value.hiding }"
-        color="$textColor--disabled"
-        margin="auto"
-      >
-        Loading message...
-      </Text>
-
-      <MessageContent when="{ selectedMessage.value.messageId && !selectionUi.value.hiding }" />
-
-      <!-- Placeholder when no message is selected -->    
-        <Text
-          when="{ !selectedMessage.value.messageId && !selectionUi.value.hiding }"
-          color="$textColor--disabled"
-          margin="auto"
-        >
-          Select a message to view details
-        </Text>
-     
+      <MessageContent when="{ selectedMessage.value.messageId }" />
     </Stack>
   </HSplitter>
 
