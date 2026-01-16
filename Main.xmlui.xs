@@ -39,9 +39,3 @@ function getMessagesHeaders() {
   return { Authorization: "Bearer " + auth.tokens.access_token };
 }
 
-function handleMessageReceived(msg, iframeHeight) {
-  if (msg && msg.type === "iframe-height") {
-    const newHeight = Number(msg.height) + 20;
-    iframeHeight.update({ height: newHeight });
-  }
-}

@@ -1,6 +1,8 @@
-<Component name="MessageContent">
+<Component
+    name="MessageContent"
+    var.iframeHeight="{300}"
+>
     <AppState id="selectedMessage" />
-    <AppState id="iframeState" />
 
     <VStack gap="0">
         <Text variant="strong" fontSize="x-large" maxLines="2">
@@ -21,13 +23,23 @@
     <!-- Divider -->
     <ContentSeparator
         orientation="horizontal"
-        thickness="1px" />
+        thickness="1px"
+    />
 
     <!-- Message body -->
-    <IFrame
-        when="{selectedMessage.value.body.length}"
-        srcdoc="{ window.wrapEmailHtml(window.sanitizeEmail(selectedMessage.value.body || ''), mediaSize.sizeIndex <= 1) }"
-        sandbox="allow-scripts allow-popups allow-popups-to-escape-sandbox"
-        height="{iframeState.value.height}px" />
+    <MessageListener
+        onMessageReceived="(msg, ev) => {
+          if (msg && msg.type === 'iframe-height') { 
+           iframeHeight = Number(msg.height) + 20}  
+        }"
+    >
+        <IFrame
+            id="messageBodyFrame"
+            when="{selectedMessage.value.body.length}"
+            srcdoc="{ window.wrapEmailHtml(window.sanitizeEmail(selectedMessage.value.body || ''), mediaSize.sizeIndex <= 1) }"
+            sandbox="allow-scripts allow-popups allow-popups-to-escape-sandbox"
+            height="{iframeHeight+'px'}"
+        />
+    </MessageListener>
 
 </Component>

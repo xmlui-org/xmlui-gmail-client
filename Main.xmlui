@@ -3,8 +3,7 @@
   layout="desktop"
   scrollWholePage="false"
   codeBehind="Main.xmlui.xs"
-  var.authObject="{ getMockAuthData() || auth }"
-  onMessageReceived="{ (msg) => handleMessageReceived(msg, iframeState)}"
+  var.authObject="{ getMockAuthData() || auth }"  
 >
   <AppState id="selectedMessage" />
 
@@ -32,8 +31,6 @@
     prevPageToken: ''
   } }"
   />
-  <!-- AppState for iframe height -->
-  <AppState id="iframeState" initialValue="{ {height: 300} }" />
 
   <!-- DataSource for list of messages (real or mock) -->
   <DataSource
